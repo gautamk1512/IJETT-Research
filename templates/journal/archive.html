@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Archive - IJETT</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Archive of Published Papers</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/submit/">Submit Paper</a> |
+            <a href="/archive/">Archive</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Published Papers</h2>
+        <ul>
+            {% for paper in papers %}
+                <li>
+                    <strong>{{ paper.title }}</strong> by {{ paper.author }} (<a href="{{ paper.paper_file.url }}" download>Download</a>)
+                </li>
+            {% empty %}
+                <li>No papers have been published yet.</li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html> 
