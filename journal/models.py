@@ -1,19 +1,27 @@
 from django.db import models
 
-# Create your models here.
-
 class Paper(models.Model):
     AREA_CHOICES = [
-        ('cs', 'Computer Science'),
-        ('ee', 'Electrical Engineering'),
-        ('me', 'Mechanical Engineering'),
-        ('ce', 'Civil Engineering'),
-        ('other', 'Other'),
+        ('engineering', 'Engineering'),
+        ('sci_tech', 'Science & Technology'),
+        ('pharmacy', 'Pharmacy'),
+        ('science', 'Science (Physics/Chemistry/Maths/Biology)'),
+        ('commerce', 'Commerce'),
+        ('economics', 'Economics'),
+        ('management', 'Management'),
+        ('hospitality', 'Hospitality and Tourism'),
+        ('arts', 'Arts'),
+        ('medical', 'Medical Science'),
+        ('life_science', 'Life Sciences'),
+        ('health_medical', 'Health & Medical Science'),
+        ('social_science', 'Social Science and Humanities'),
+        ('law', 'LAW & Education'),
+        ('biotech', 'Biotechnology'),
     ]
 
     title = models.CharField(max_length=200)
     paper_file = models.FileField(upload_to='papers/')
-    area_of_research = models.CharField(max_length=50, choices=AREA_CHOICES, default='other')
+    area_of_research = models.CharField(max_length=50, choices=AREA_CHOICES, default='engineering')
     author_name = models.CharField(max_length=100)
     institution = models.CharField(max_length=200)
     email = models.EmailField()
