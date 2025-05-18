@@ -1,30 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Archive - IJETT</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <header>
-        <h1>Archive of Published Papers</h1>
-        <nav>
-            <a href="/">Home</a> |
-            <a href="/submit/">Submit Paper</a> |
-            <a href="/archive/">Archive</a>
-        </nav>
-    </header>
-    <main>
-        <h2>Published Papers</h2>
-        <ul>
-            {% for paper in papers %}
-                <li>
-                    <strong>{{ paper.title }}</strong> by {{ paper.author }} (<a href="{{ paper.paper_file.url }}" download>Download</a>)
-                </li>
-            {% empty %}
-                <li>No papers have been published yet.</li>
-            {% endfor %}
-        </ul>
-    </main>
-</body>
-</html> 
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-10 bg-gray-100 min-h-screen">
+  <div class="max-w-6xl mx-auto px-2 sm:px-4">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Archive Issues</h2>
+
+    <!-- Search Bar -->
+    <form method="get" class="flex flex-col sm:flex-row items-stretch sm:items-center mb-8 gap-2">
+      <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Search by Paper ID, Paper Title, Author Name..."
+             class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <button type="submit" class="bg-blue-600 text-white px-4 py-3 rounded-md hover:bg-blue-700 w-full sm:w-auto">🔍</button>
+    </form>
+
+    {% if query and not archive_issues|length or archive_issues|length == 0 or not archive_issues.0.papers %}
+      <div class="bg-white rounded-xl shadow-sm p-6 mb-6 text-center text-gray-500">
+        No results found for "{{ query }}".
+      </div>
+    {% endif %}
+
+    <!-- Archive Entry Block (repeat this for each month) -->
+    {% for issue in archive_issues %}
+    {% if issue.papers %}
+    <div class="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6">
+      <h3 class="text-lg font-bold text-gray-700 mb-4">
+        {{ issue.month }} {{ issue.year }} | Volume: {{ issue.volume }} | Issue: {{ issue.issue }}
+      </h3>
+
+      <!-- Paper List -->
+      {% for paper in issue.papers %}
+      <div class="border-b last:border-b-0 py-4">
+        <h4 class="font-semibold text-gray-800">{{ paper.title }}</h4>
+        <p class="text-sm text-gray-600 mb-2">Authors: {{ paper.authors }}</p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="{{ paper.read_more_url }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm text-center">Read More</a>
+          <a href="{{ paper.pdf_url }}" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm text-center">Download PDF</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+  </div>
+</section>
+
+
+
+{% endblock %} 

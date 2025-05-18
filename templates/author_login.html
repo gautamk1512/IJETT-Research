@@ -1,0 +1,56 @@
+{% load static %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center max-w-xl mx-auto">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login to Author Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f5fbff] min-h-screen flex items-center justify-center px-4">
+    <div class="w-full max-w-6xl bg-white shadow-lg rounded-xl flex flex-col md:flex-row p-6 md:p-10 gap-6">
+        <!-- Left Form Section -->
+        <div class="flex-1">
+            <h1 class="text-3xl font-semibold mb-6">Login to Author Home</h1>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="paper_id" class="block text-gray-700 font-medium mb-2">Paper ID <span class="text-red-500">*</span></label>
+                    <input type="text" name="paper_id" id="paper_id" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Paper ID">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-2">Email <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input type="email" name="email" id="email" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Email">
+                        <img src="{% static 'images/email-icon.png' %}" alt="Email Icon"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6">
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-2">
+                    <button type="submit"
+                        class="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition">LOGIN</button>
+                    <a href="/author-register/" class="bg-green-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-green-600 transition text-center">REGISTER</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Help Section -->
+        <div class="flex-1 bg-gray-50 border rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-blue-600 mb-4">How to Login?</h2>
+            <p class="text-gray-700 mb-6">
+                Use your Paper ID and Email ID to login into the Author Area.
+            </p>
+            <h2 class="text-xl font-semibold text-blue-600 mb-2">Need Help?</h2>
+            <p class="text-gray-700">
+                Write to us at <a href="mailto:editor@ijjrt.org" class="text-blue-600 underline">editor@ijjrt.org</a> for any query.
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

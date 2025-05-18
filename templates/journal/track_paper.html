@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Track Paper Status{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+  <h2 class="text-xl font-bold mb-4">Track Your Paper</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="paper_id" placeholder="Enter Paper ID (numeric)" class="w-full mb-3 px-3 py-2 border rounded" required>
+    <input type="email" name="email" placeholder="Enter Author Email" class="w-full mb-3 px-3 py-2 border rounded" required>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Track</button>
+  </form>
+  {% if error %}
+    <div class="mt-4 text-red-600">{{ error }}</div>
+  {% endif %}
+  {% if paper %}
+    <div class="mt-4">
+      <h3 class="font-semibold">Paper Title: {{ paper.title }}</h3>
+      <p>Status: <span class="font-bold">{{ status }}</span></p>
+      <p>Area of Research: {{ paper.get_area_of_research_display }}</p>
+      <p>Submitted At: {{ paper.submitted_at|date:'M d, Y H:i' }}</p>
+      <p>Institution: {{ paper.institution }}</p>
+      <p>Author: {{ paper.author_name }}</p>
+      <p>Email: {{ paper.email }}</p>
+      {% if paper.paper_file %}
+        <a href="{{ paper.paper_file.url }}" class="text-blue-600 hover:underline" target="_blank">Download Paper</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %} 

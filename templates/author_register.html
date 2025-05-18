@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-4 bg-[#f5fbff]">
+  <div class="w-full max-w-2xl bg-white shadow-lg rounded-xl flex flex-col p-6 md:p-10 gap-6">
+    <h1 class="text-3xl font-semibold mb-6">Register as Author</h1>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center max-w-xl mx-auto">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label for="paper_id" class="block text-gray-700 font-medium mb-2">Paper ID <span class="text-red-500">*</span></label>
+        <input type="text" name="paper_id" id="paper_id" required
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Paper ID">
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 font-medium mb-2">Email <span class="text-red-500">*</span></label>
+        <div class="relative">
+          <input type="email" name="email" id="email" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Email">
+          <img src="{% static 'images/email-icon.png' %}" alt="Email Icon"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6">
+        </div>
+      </div>
+      <button type="submit"
+          class="bg-green-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-green-600 transition">REGISTER</button>
+    </form>
+  </div>
+</div>
+{% endblock %} 

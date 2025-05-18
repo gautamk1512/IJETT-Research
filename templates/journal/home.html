@@ -1,124 +1,328 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IJIRT Clone</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="font-sans">
-
-    <!-- Topbar -->
-    <div class="bg-blue-100 text-sm text-gray-800 flex justify-between px-6 py-2">
-      <div>
-        <span class="font-semibold">ISSN: 2349-6002</span> | 
-        UGC Approved Journal No 47859
-      </div>
-      <div class="space-x-4">
-        <a href="#" class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700">AUTHOR LOGIN</a>
-        <a href="#" class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700">IJIRT PARTNER LOGIN</a>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}IJART Clone - Home{% endblock %}
+{% block content %}
+<!-- Hero -->
+<section class="bg-gray-50 py-10 md:py-16">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-4 md:px-6">
+    <div>
+      <p class="text-sm text-blue-600 font-medium mb-2">ESTD Year: 2014</p>
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 leading-tight">
+        IJART – International Journal of Advanced Research in Technology
+      </h1>
+      <p class="mt-4 text-gray-600 text-base md:text-lg">
+        An International Open Access Journal, Peer Reviewed, UGC approved Journal no 47859 IJARTEXPLORE - Search Thousands of research papers
+      </p>
+      <div class="mt-6 flex flex-col sm:flex-row gap-4">
+        <a href="/submit/" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center">SUBMIT PAPER</a>
+        <a href="{% url 'track_paper' %}" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-center">TRACK PAPER</a>
       </div>
     </div>
+    <div class="text-center mt-8 md:mt-0">
+      <img src="https://media.istockphoto.com/id/1345875024/vector/searching-knowledge-concept.jpg?s=2048x2048&w=is&k=20&c=Sc9bsahfXQLKJy8JuPZ894FSkdkzh53bOEtAFUswFXE=" />
+    </div>
+  </div>
+</section>
+<!-- Ticker/News -->
+<div class="w-full bg-yellow-200 dark:bg-gray-800 py-2 overflow-hidden relative mb-6">
+  <div class="whitespace-nowrap animate-marquee-rtl text-blue-900 dark:text-white font-semibold text-sm">
+    <span class="inline-block bg-red-700 text-white rounded-full px-4 py-1 mr-2 font-bold tracking-wide" style="font-size: 1rem; letter-spacing: 0.03em;">Latest Updates 👉</span>
+    Join our mission for research excellence! 📈 Year 2024 Impact Factor 8.017
+    {% if updates %}
+      &nbsp;|&nbsp; {{ updates.0.title }}{% if updates.0.content %}: {{ updates.0.content }}{% endif %}
+    {% else %}
+      &nbsp;
+    {% endif %}
+    
+  </div>
+</div>
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow">
-      <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-        <img src="https://ijirt.org/images/logo.png" alt="Logo" class="h-14" />
-        <ul class="flex gap-4 text-gray-700 font-medium">
-          <li><a href="#" class="hover:text-blue-600">Home</a></li>
-          <li><a href="#" class="hover:text-blue-600">Editorial</a></li>
-          <li><a href="#" class="hover:text-blue-600">Authors</a></li>
-          <li><a href="#" class="hover:text-blue-600">Conference</a></li>
-          <li><a href="/submit/" class="hover:text-blue-600">Submit Paper</a></li>
-          <li><a href="#" class="hover:text-blue-600">Current Issue</a></li>
-          <li><a href="#" class="hover:text-blue-600">Archive</a></li>
-          <li><a href="#" class="hover:text-blue-600">Reviews</a></li>
-        </ul>
-        <a href="/submit/" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">SUBMIT PAPER</a>
+<!-- Latest Updates Section
+<div class="max-w-4xl mx-auto mb-8">
+  <h2 class="text-xl font-bold text-gray-800 mb-4">Latest Updates</h2>
+  <ul>
+    {% for update in updates %}
+      <li class="mb-2 p-3 bg-blue-50 rounded shadow">
+        <strong>{{ update.title }}</strong>: {{ update.content }} <span class="text-xs text-gray-500">({{ update.created_at|date:'M d, Y H:i' }})</span>
+      </li>
+    {% empty %}
+      <li>No updates yet.</li>
+    {% endfor %}
+  </ul>
+</div> -->
+
+<style>
+@keyframes marquee-rtl {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee-rtl {
+  display: inline-block;
+  min-width: 100%;
+  animation: marquee-rtl 25s linear infinite;
+}
+</style>
+
+<!-- Indexing Partners Slider -->
+<section class="bg-white py-10 mt-10">
+  <div class="text-center mb-6">
+    <h2 class="text-xl font-semibold">Indexing Partners</h2>
+  </div>
+  <div class="overflow-hidden">
+    <div class="flex animate-slide whitespace-nowrap space-x-12 px-4">
+      <img src="{% static 'img/road.png' %}" class="h-12 inline-block" alt="ROAD" />
+      <img src="{% static 'img/issuu.png' %}" class="h-12 inline-block" alt="Issuu" />
+      <a href="https://www.emarkable.ie/2018/08/what-is-slideshare-how-to-use-slideshare-for-your-business/" target="_blank" rel="noopener">
+        <img src="data:image/png;base64,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" class="h-12 inline-block" alt="Slideshare" />
+      <!-- repeat for infinite loop effect -->
+      <img src="{% static 'img/road.png' %}" class="h-12 inline-block" alt="ROAD" />
+      <img src="{% static 'img/issuu.png' %}" class="h-12 inline-block" alt="Issuu" />
+      <a href="https://www.emarkable.ie/2018/08/what-is-slideshare-how-to-use-slideshare-for-your-business/" target="_blank" rel="noopener">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAz1BMVEX////YcRwCbJcAYZAAZ5T6/P2buMuswtJRi6tZkrDc6O4AaZXYbxcAZJIpcpr57eZdjazWaADcfzzVYgAAXI39+fb89O/XbAoAWIvjnW87eZ/35Nnq8fXy9/nZdSQAbJ2EqsHL2+R5o7zko3ntwqrz1sbfj1nnrorx0LzdhkvUWwDglGHaeS2rb02/1N/ru5w9gqZoiJrLbBqDcWrHcCphbnynaUEiaIuZbFOzbjtobnPhcQRRbYLa29q8bzlGdJQ9bYV1bnG4m4umblXZvq7/0wu+AAAIu0lEQVR4nO2cC5OiSBLHlSrwUYAWD2lFbQRfrK6yfbuz0+vezs7tff/PdID4AOsFqBNx4T9iZiKmafl1ZlZVVlZWNxpFdXd+pEvPUtRpzSY3DAWNfR1o6GlMEoIAtndsppalPQ/oJGi1xwwm/wcgJdKiLpXJAxk6eJqyUIE6zVYt64gttT3lWfIjDaYv7ZOZJnpCjZAis+Puzpq1U/9oLeJXlSSgkET37oM0SSMZjki2kFNDwdmzmeI39xMPvpHe3E0iSvOfjpS8GtBe3Uq+AlgTxuOUmAqR/OdpSUQ9N8hPSsIZjQjLTSehbf8YqNRLOmGI/VAo7QUlpheUqF5QonpBieoFJaoXlKheUKJ6QYnqBSWqF5SoXlCiekGJ6gUlqheUqP5foWx7MBgIvUyWJxORT6wJ1ZsHhpNINYJ1j/Vkt+XrEGgakCJvxykQ1oJyh1MTq81UKsbbwKU9OfOlU+EeIQ2MPCZWDajexnQyohOXGRD92O1YMHfOgSDwGIdV1aHWW9y8ETYIxtrphDMewDh/qQy1N9VbpsRa8+KTCiCezUFAPUKrCrUnmCmjWhfeAChnVQjRTg4qQs1pTDGVsxBiij8eUDxYDarXJPruKGd69eSEda4KKZ9fDWpJN1QS7cHlyT6kM0mSpdwPauGwmJrq9DwEZ+zzZ0Q+bKwCZW/YUE28EjOUJGlEU1WB6jGdl1JlT07e2EwSikhzaBUo6nRwlplNCwp96J2iijQAq0AtOd6LB2AW6h1uSwMg+a8ClG0w5oOj1E365CTiMUmwcx+o3pYPFaYLc1fnWgpF94Fyp3woI82tulxDkQ9AH2wpPtSdLCUeU+MR3313iqlGyIU6jT7e3BmPPu9OUCvhecrjz1Ok9KUKlGtyoezjk13ujK7fa0a3Q97aNzw9GnGCiui9alnCmue/c5bQ4gUVMc27hXKP+zdmPrVlmupiqIbcZpqK0rZygerukr/toYnNYY8D5bJMpTr25ckZK9TJEXWB6raBZnlx/pa8Dm/nnBydNQDz+xnWAKTtZ45QYwUm/4JZlpao5uaXd+ZuZkilKu6xfCoVMUM4Q0k6OD112qbgj3+9I1pi30jdTPaduSo8KXcsMhMlQT9DZdEIWg33/PGHX39j7pBXmDCxO8317ZOKRhiDENHbOVvXO2otnl6Ds19U58svrFrColncJDtmSCxx7HSrMAiRxdi156CO3gov0eIcVtQ6SqJ5iC/mUjFeEsyUvaYNLqGFgNZndL12/St/Q5Tud3rGVQzjZsCqOg0WwRSbOJaJtyvXpj85mfl62sgJLG2kdOkll7F3XQ6BerY2DoyrqVHFPw0X1E9IZPcWi4XbYwCdwbqz3W42ZoXEzM81BiN4drJr5CZs7CxvKimP0a6DckUjdD0YBmF+FnIwDhZiZc3KkrueVCitnX1Hpoq96Bgrthtrqau0pWIZq8CU7MxvZmwVm06wZgVzRY13SvR2W1jTRrd1BtLcGI/6aRjMXfteZPJkpvRHCBAmV9Ah1T7mDikVV2Mw0wmD/fxmxA3swYA0COVJrOJ/jruzluKPoKVBYnJDzv7iGXtKzZpiMqxODSMMN8NhEAyHm2UYGrG2xjJYXIGNlU40ShS1fc9LW8g9z++0v+k60ugXFSAiN1knP/qQXGw9Gy1WUtjHaXX/JHxZa2QFAIiOglDTtHT21MDvXz+//k7hSc3UZvV2z5vcWgZB51WZnLW8//HhqIcv7zQkBFk19lhuyDQWzYZmOtuS9zLvvx2Sj5xSzTTi3AaJtadHFkNpLc8n7RrQnx/pj0mBgpIvcqTU21QxlrmyJ+RNw5GpuSV6zopEu/IXISmf49nK+DexvPHlaHiHEFNIG7XEDxjt9ba8tRw1TqiLr33/PBy/evh+AwWgUq4n347zudKxdfj8M//m97//yj5ENb7lgZGmK9xLWARrGSZxjmcZq/n174u13tH3j9MPhv+TQ4KW1Kp4c8ENjLJedA6ff3yLvRZb7Nv3Xw+n71a3ncvIREDv7GocVvfm/NrUDdbHXz//88/Pnx+Hy7fi/175VVfq3s3h16ZulSxG6vUPg/dXV89g/Wsw/Bo6X3ibO7IhXfsoJYHKMFdOOJByQ6/uLSbO+ZWQnfAgX/QA1DRFUFVCqsC0sQuFGNiuCWXUtJSKg8auWPDQ6jHZPwm/nYwULo5X9HJ6q3fji18XzjTd4jgfLbRS4O3alglFNIufQLE0F4RSjZ47D5aqaeI0V3awaYbJvnEWEZLRmhf2ROP8eGBk99z1fLVcLsPNfu0OkkuOiJj3kY5CxDUUjPPsFCsneeZD8hViRsFQQLboypdCybvuRJblRvxHnuy8iGil1FKEvbC4evzzq2uo9huIon6/027rbxaraYJ0uCAs4UXmCNVHUrLfS3Z+dKDUVHUWGpePU4ASE6wzJyxEV+OSUFotKNFFpqyl6izJ3NOrilC18oQXlDDUg2KqFtSjAp3yewgEoR40JdSapx41edbaOpRc+54DZS8fAlUvS2jwmvGqQcF2re1oUCbzFIeqlw6vxXP0ElDkFkZhDR4C9Vaz6iI4/MpBgZo3KQS3M6WgateCBBeaUlC1FplEgvuZMlA1Z6lEe6FQLwN1h0reQKjOXwaq7thLJBTqJaDqbY8z9UT2fupWHKpeySWTSFSJW4rYO1xetkA1T10mR7YiULS7F2W1ULkOdNKuvNua3Y1qLntX4juQdTKac150t7t6NjeDyZpPeZ3fCN3xl5MR+jtyOt1RYVzkOQbUXUbeSQMm1fmKCqfLuvaiVxCtT/DovP3psR0jqpB1Z6YGpU/w6LzN5SmPOgChflffZVpPyVg4vOq0kn1aPyWrUbCOVtPbyFKv7ZTIIxU7gf6431PoBibOHSuo2JwX+4J2MN8bhaBl1T4LZcreD6cYp2Sqg7GxIjTJycpIO3ZIIagBMOqXaD6oKnexDzbhdmts9rS+vfFM6eiSpEcdvzUrn2f+D79I0P4+i09rAAAAAElFTkSuQmCC" class="h-12 inline-block" alt="Slideshare" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-slide {
+  animation: slide 40s linear infinite;
+}
+</style>
+
+<!-- About IJART Section -->
+<div class="max-w-7xl mx-auto p-6">
+  <div class="grid md:grid-cols-2 gap-8 items-center">
+    <!-- Image -->
+    <div>
+      <img src="https://media.istockphoto.com/id/1866127764/photo/logical-flow-chart.jpg?s=2048x2048&w=is&k=20&c=brHljYhmKtr_3MfkGQzPSc-3_TV7o4RcK1794qtbU9c=" alt="IJART About Image" class="rounded-xl shadow-md">
+    </div>
+    <!-- Text Content -->
+    <div>
+      <div class="relative mb-4">
+        <span class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded-full absolute -top-6 left-0">
+          50k Published Papers
+        </span>
       </div>
-    </nav>
-
-    <!-- Hero -->
-    <section class="bg-gray-50 py-16">
-      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center px-6">
-        <div>
-          <p class="text-sm text-blue-600 font-medium mb-2">ESTD Year: 2014</p>
-          <h1 class="text-3xl md:text-4xl font-bold text-gray-800 leading-tight">
-            International Journal of Innovative Research in Technology - an UGC approved journal
-          </h1>
-          <p class="mt-4 text-gray-600">
-            An International Open Access Journal, Peer Reviewed, UGC approved Journal no 47859 IJIRTEXPLORE - Search Thousands of research papers
-          </p>
-          <div class="mt-6 flex gap-4">
-            <a href="/submit/" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">SUBMIT PAPER</a>
-            <a href="#" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">TRACK PAPER</a>
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">About IJART: International Journal of Advanced Research in Technology</h2>
+      <p class="text-gray-700 mb-4 leading-relaxed">
+        Scientific research journals play a pivotal role in academic publishing, providing a platform for scholars to publish their articles and research findings.
+      </p>
+      <p class="text-gray-700 mb-4 leading-relaxed">
+        UGC-approved journals, also known as UGC CARE journals, are highly regarded in the academic community for their credibility and quality standards. These peer-reviewed scientific journals ensure the rigor and validity of published research. Conference paper publication further facilitates the dissemination of research, offering scholars an opportunity to present their work to a broader audience.
+      </p>
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-4 mt-6">
+        <div class="flex items-center space-x-2">
+          <div class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+            📘 Impact Factor: 8.01 (Year 2024)
           </div>
         </div>
-        <div class="text-center">
-          <img src="https://img.freepik.com/free-photo/young-woman-working-laptop-isolated-white-background_231208-1573.jpg?w=740&t=st=1715975309~exp=1715975909~hmac=78a7b7425d3d0c19f3c2e8229a395b346b7582b38bc2bfa3c17f3f4327ecb382" alt="Hero Girl" class="w-full rounded-lg" />
+        <div class="flex items-center space-x-2">
+          <div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+            ✔ UGC Approved Journal No 47859
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
 
-    <!-- Ticker/News -->
-    <div class="bg-black text-white text-sm py-2 px-6 flex items-center gap-4 overflow-x-auto whitespace-nowrap">
-      <span class="bg-red-600 px-2 py-1 text-xs rounded">Latest Updates</span>
-      <span>✨ Join our mission for research excellence!</span>
-      <span>📈 Year 2024 Impact Factor 8.017</span>
+<!-- Call For Paper Section (Full Content) -->
+<!-- Search Bar -->
+<div class="max-w-6xl mx-auto px-4 py-6">
+    <input type="text" placeholder="Search by Paper id, Published paper id, Paper Name"
+           class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+</div>
+
+<div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+    <!-- Left Content Area -->
+    <div class="md:col-span-2">
+        <h1 class="text-3xl font-semibold mb-6 leading-tight">
+            IJIRT Call For Paper 2024 - IJIRT Journal - Solaris Publication
+        </h1>
+
+        <div class="border rounded-lg bg-white">
+            <table class="w-full text-left border-collapse">
+                <tbody>
+                    <tr class="border-b">
+                        <td class="p-4 font-semibold text-gray-800">Published By</td>
+                        <td class="p-4">IJIRT Journal - Solaris Publication</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-4 font-semibold text-gray-800">Current Publication</td>
+                        <td class="p-4">April 2025 | Volume-11 Issue-11</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-4 font-semibold text-gray-800">e-ISSN</td>
+                        <td class="p-4">2349-6002</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-4 font-semibold text-gray-800">Frequency</td>
+                        <td class="p-4">Monthly, 12 issues per Year</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-4 font-semibold text-gray-800">Discipline</td>
+                        <td class="p-4">Multidisciplinary</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-4 font-semibold text-gray-800">Last Submission Date</td>
+                        <td class="p-4">25th April 2025</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-gray-800">Paper Processing Charges</td>
+                        <td class="p-4">
+                            <button class="bg-blue-50 text-blue-600 font-semibold text-sm px-4 py-1 rounded border border-blue-100">
+                                VIEW PROCESSING CHARGES DETAILS
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="p-4">
+                <button class="mt-4 bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700">
+                    ONLINE RESEARCH PAPER SUBMISSION
+                </button>
+            </div>
+        </div>
+
+        <!-- Below the table -->
+        
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t py-10">
-      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 text-sm text-gray-700">
-        <!-- Logo and CTA -->
-        <div>
-          <img src="https://ijirt.org/images/logo.png" alt="Logo" class="h-16 mb-4" />
-          <p class="mb-4">IJIRT.org opens doors in research by providing high-quality research articles through open access.</p>
-          <a href="#submit-form" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">SUBMIT PAPER</a>
+    <!-- Right Sidebar -->
+    <div class="space-y-6">
+        <!-- Impact Factor Card -->
+        <div class="bg-blue-500 text-white p-4 rounded-md shadow">
+            <p class="font-semibold">Impact Factor<br>8.01 (Year 2024)</p>
+            <hr class="my-2 border-white">
+            <p class="font-semibold">UGC Approved<br>Journal no 47859</p>
         </div>
-        <!-- Important Links -->
-        <div>
-          <h4 class="font-bold mb-3">Important Links</h4>
-          <ul class="space-y-2">
-            <li><a href="#submit-form" class="hover:underline">Submit paper</a></li>
-            <li><a href="#" class="hover:underline">Paper Format</a></li>
-            <li><a href="#" class="hover:underline">Current Issue</a></li>
-            <li><a href="#" class="hover:underline">Archive</a></li>
-            <li><a href="#" class="hover:underline">Author Login</a></li>
-            <li><a href="#" class="hover:underline">Blog</a></li>
-          </ul>
-        </div>
-        <!-- Browse Research -->
-        <div>
-          <h4 class="font-bold mb-3">Browse Research papers</h4>
-          <ul class="space-y-2">
-            <li><a href="#" class="hover:underline">Processing Charges</a></li>
-            <li><a href="#" class="hover:underline">IJIRT Partner Network (IPN) Login</a></li>
-            <li><a href="#" class="hover:underline">Sitemap</a></li>
-          </ul>
-        </div>
-        <!-- Contact -->
-        <div>
-          <h4 class="font-bold mb-3">Contact</h4>
-          <p class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg> <a href="mailto:editor@ijirt.org" class="text-blue-600 hover:underline">editor@ijirt.org</a></p>
-          <div class="flex gap-3 mt-4">
-            <a href="#" class="bg-gray-100 p-2 rounded hover:bg-gray-200"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="bg-gray-100 p-2 rounded hover:bg-gray-200"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="bg-gray-100 p-2 rounded hover:bg-gray-200"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="bg-gray-100 p-2 rounded hover:bg-gray-200"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="border-t mt-8 pt-4 text-center text-xs text-gray-500">
-        &copy; 2024 <strong>IJIRT</strong>. All Rights Reserved. &nbsp;|&nbsp;
-        <a href="#" class="hover:underline">Peer Review Policy</a> &nbsp;|&nbsp;
-        <a href="#" class="hover:underline">Publication Policy</a> &nbsp;|&nbsp;
-        <a href="#" class="hover:underline">Ethics policy</a> &nbsp;|&nbsp;
-        <a href="#" class="hover:underline">Privacy policy</a> &nbsp;|&nbsp;
-        <a href="#" class="hover:underline">Terms And Conditions</a> &nbsp;|&nbsp;
-        <a href="#" class="hover:underline">Refund policy</a>
-      </div>
-    </footer>
 
-  </body>
-</html> 
+        <!-- IPN Join Card -->
+        <div class="bg-white p-4 border rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold text-blue-600 mb-2">Join Our IPN</h3>
+            <p class="text-gray-700 text-sm mb-4">
+                Submit your research paper and those of your network (friends, colleagues, or peers) through your IPN account,
+                and receive <strong>800 INR</strong> for each paper that gets published.
+            </p>
+            <button class="w-full bg-blue-500 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600">
+                JOIN NOW →
+            </button>
+        </div>
+
+        <!-- Latest Publications -->
+        <div class="bg-white p-4 border rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold mb-2">Latest Publication</h3>
+
+            <div class="mb-4">
+                <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded mb-1">
+                    PAPER ID: IJIRTT79222
+                </span>
+                <p class="text-sm">Legal Solutions - GenAI</p>
+            </div>
+
+            <div>
+                <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded mb-1">
+                    PAPER ID: IJIRTT79218
+                </span>
+                <p class="text-sm">INTEGRATED FREELANCING AND QNA SYSTEM WITH TASK BIDDING AND ANSWER RANKING</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How to Publish Research Paper Section -->
+<section class="bg-sky-50 py-12 px-4">
+  <div class="text-center mb-10">
+    <h2 class="text-2xl font-bold">How to Publish Research Paper online in IJIRT</h2>
+    <div class="w-8 h-1 bg-blue-400 mx-auto mt-2 rounded"></div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+    
+    <!-- Submit Paper -->
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-sky-100 p-6 rounded-full">
+          <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12V4m0 0l-4 4m4-4l4 4" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Submit Paper</h3>
+      <p class="text-gray-600">Authors submit their profile<br>Paper/Manuscript doc/docx</p>
+    </div>
+
+    <!-- Review Process -->
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-sky-100 p-6 rounded-full">
+          <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M5 11h14M5 19h14M5 15h14M12 7v4" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Review Process</h3>
+      <p class="text-gray-600">Paper review by Reviewer<br>committee.</p>
+    </div>
+
+    <!-- Acceptance Status -->
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-sky-100 p-6 rounded-full">
+          <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Acceptance Status</h3>
+      <p class="text-gray-600">If a paper is accepted after review, the author will be notified via their registered email address.</p>
+    </div>
+
+    <!-- Processing Charges -->
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-sky-100 p-6 rounded-full">
+          <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.105 0-2 .895-2 2s.895 2 2 2m0 4v-4m-4 4h8m-4-6h.01M4 6h16M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Processing Charges</h3>
+      <p class="text-gray-600">Pay paper processing charges as per mentioned in acceptance letter.</p>
+    </div>
+
+    <!-- Copyright Submission -->
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-sky-100 p-6 rounded-full">
+          <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m2 4H7a2 2 0 01-2-2V6a2 2 0 012-2h6l4 4v8a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Copyright Submission</h3>
+      <p class="text-gray-600">Submit the signed copyright and undertaking forms.</p>
+    </div>
+
+    <!-- Published -->
+    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-md transition text-center">
+      <div class="flex justify-center mb-4">
+        <div class="bg-sky-100 p-6 rounded-full">
+          <svg class="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l2 7h7l-5.6 4.3 2 7L12 16l-5.4 4.3 2-7L3 9h7z" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Published</h3>
+      <p class="text-gray-600">The paper will be published, and the author will be notified via their registered email address.</p>
+    </div>
+
+  </div>
+</section>
+{% endblock %} 
