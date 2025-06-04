@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Register as Author - IJETT{% endblock %}
 {% block content %}
-<div class="min-h-screen flex items-center justify-center px-4 bg-[#f5fbff]">
-  <div class="w-full max-w-2xl bg-white shadow-lg rounded-xl flex flex-col p-6 md:p-10 gap-6">
+<div class="py-8 px-4 bg-[#f5fbff]">
+  <div class="w-full max-w-2xl bg-white shadow-lg rounded-xl flex flex-col p-6 md:p-10 gap-6 mx-auto">
     <h1 class="text-3xl font-semibold mb-6">Register as Author</h1>
     {% if messages %}
       {% for message in messages %}
@@ -25,8 +26,11 @@
               class="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6">
         </div>
       </div>
-      <button type="submit"
-          class="bg-green-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-green-600 transition">REGISTER</button>
+      <div class="flex gap-4">
+        <button type="submit"
+            class="bg-green-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-green-600 transition">REGISTER</button>
+        <a href="/author-login/" class="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition text-center">LOGIN</a>
+      </div>
     </form>
   </div>
 </div>

@@ -3,6 +3,9 @@ from .models import Paper, CoAuthor, ArchiveIssue, ArchivePaper, LatestUpdate
 from django import forms
 from django.contrib import messages
 from django.db import models
+from django.core.mail import send_mail
+from django.conf import settings
+import requests
 
 # Create your views here.
 
@@ -14,6 +17,28 @@ class PaperForm(forms.ModelForm):
             'address_line1', 'address_line2', 'country', 'state', 'city', 'pincode', 'prev_paper'
         ]
 
+def send_sms(phone_number, message):
+    # Fast2SMS API configuration
+    url = "https://www.fast2sms.com/dev/bulkV2"
+    headers = {
+        'authorization': 'YOUR_FAST2SMS_API_KEY',  # Replace with your Fast2SMS API key
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    payload = {
+        'route': 'v3',
+        'sender_id': 'TXTIND',
+        'message': message,
+        'language': 'english',
+        'flash': '0',
+        'numbers': phone_number
+    }
+    try:
+        response = requests.post(url, headers=headers, data=payload)
+        return response.json()
+    except Exception as e:
+        print(f"Error sending SMS: {e}")
+        return None
+
 def home(request):
     updates = LatestUpdate.objects.order_by('-created_at')
     return render(request, 'journal/home.html', {'updates': updates})
@@ -23,8 +48,43 @@ def submit_paper(request):
         form = PaperForm(request.POST, request.FILES)
         if form.is_valid():
             paper = form.save()
-            # Co-author handling will be added next
-            return redirect('home')
+            
+            # Send success message to user
+            messages.success(request, f'Your paper has been submitted successfully! Your Paper ID is: {paper.id}. Please save this ID for future reference.')
+            
+            # Send email notification to admin
+            admin_email = 'gautams1512@gmail.com'
+            email_subject = 'New Paper Submission'
+            email_message = f"""
+            New paper submitted:
+            
+            Paper ID: {paper.id}
+            Title: {paper.title}
+            Author: {paper.author_name}
+            Email: {paper.email}
+            Institution: {paper.institution}
+            Area of Research: {paper.get_area_of_research_display()}
+            
+            Please review the submission at your earliest convenience.
+            """
+            
+            try:
+                send_mail(
+                    email_subject,
+                    email_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [admin_email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"Error sending email: {e}")
+            
+            # Send SMS notification to admin
+            admin_phone = '9540375221'
+            sms_message = f"New paper submitted! Paper ID: {paper.id}, Title: {paper.title[:30]}..."
+            send_sms(admin_phone, sms_message)
+            
+            return redirect('submit_paper')
     else:
         form = PaperForm()
     return render(request, 'journal/submit_paper.html', {'form': form})

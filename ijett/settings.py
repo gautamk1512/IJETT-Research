@@ -127,3 +127,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'gautams1512@gmail.com'
+# IMPORTANT: Do not use your regular Gmail password here
+# Instead, generate an App Password from your Google Account:
+# 1. Go to Google Account → Security
+# 2. Enable 2-Step Verification if not already enabled
+# 3. Go to App Passwords
+# 4. Generate a new app password for "Mail"
+# 5. Copy the 16-character password and paste it below
+EMAIL_HOST_PASSWORD = 'xkxb virn qzgv ikfg'  # Replace with your App Password
+DEFAULT_FROM_EMAIL = 'gautams1512@gmail.com'
