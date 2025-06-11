@@ -6,6 +6,7 @@ from django.db import models
 from django.core.mail import send_mail
 from django.conf import settings
 import requests
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -163,3 +164,19 @@ def track_paper(request):
         except Paper.DoesNotExist:
             error = "Paper not found. Please check your Paper ID and Email."
     return render(request, 'journal/track_paper.html', {'paper': paper, 'status': status, 'error': error})
+
+def test_email(request):
+    try:
+        send_mail(
+            'Test Email',
+            'This is a test email from your Django application.',
+            settings.EMAIL_HOST_USER,
+            [settings.EMAIL_HOST_USER],
+            fail_silently=False,
+        )
+        return HttpResponse('Test email sent successfully!')
+    except Exception as e:
+        return HttpResponse(f'Failed to send email: {str(e)}')
+
+def conference_dropdown_instructions(request):
+    return render(request, 'journal/conference_dropdown_instructions.html')

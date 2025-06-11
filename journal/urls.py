@@ -11,4 +11,6 @@ urlpatterns = [
     path('author-register/', views.author_register, name='author_register'),
     path('call-for-paper/', views.call_for_paper, name='call_for_paper'),
     path('track/', views.track_paper, name='track_paper'),
+    path('test-email/', views.test_email, name='test_email'),
+    path('conference-dropdown-instructions/', views.conference_dropdown_instructions, name='conference_dropdown_instructions'),
 ] 

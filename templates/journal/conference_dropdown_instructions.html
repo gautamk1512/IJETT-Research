@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Conference Dropdown Instructions{% endblock %}
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white rounded-lg shadow p-8 mt-10">
+  <h1 class="text-2xl font-bold mb-4">How to Add the Conference Dropdown</h1>
+  <p class="mb-4">To add the <strong>Conference</strong> dropdown exactly as it appears in the navigation, copy and paste the following HTML code into your navigation bar (usually in <code>base.html</code>):</p>
+  <pre class="bg-gray-100 p-4 rounded overflow-x-auto text-sm"><code>&lt;li class="relative group"&gt;
+  &lt;a href="#" class="hover:text-blue-600 flex items-center"&gt;Conference 
+    &lt;svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"&gt;
+      &lt;path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /&gt;
+    &lt;/svg&gt;
+  &lt;/a&gt;
+  &lt;div class="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200 z-50 invisible group-hover:visible"&gt;
+    &lt;ul class="py-2 text-gray-700"&gt;
+      &lt;li&gt;&lt;a href="#" class="block px-6 py-2 hover:bg-blue-50"&gt;New Proposal / Terms&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#" class="block px-6 py-2 hover:bg-blue-50"&gt;Special Issues&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#" class="block px-6 py-2 hover:bg-blue-50"&gt;Upcoming Conferences&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/li&gt;
+</code></pre>
+  <p class="mt-4">Paste this inside your navigation <code>&lt;ul&gt;</code> where you want the Conference dropdown to appear. You can update the links as needed.</p>
+</div>
+{% endblock %} 
