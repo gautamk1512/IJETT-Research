@@ -12,12 +12,12 @@
     <!-- Topbar -->
     <div class="bg-blue-100 text-sm text-gray-800 flex flex-col md:flex-row md:justify-between md:items-center px-4 md:px-6 py-2">
       <div class="flex-1 text-center md:text-left">
-        <span class="font-semibold">ISSN: 2349-6002</span> |
-        UGC Approved Journal No 47859
+        <span class="font-semibold">ISSN: 2582-1230</span> |
+        UGC 50112
       </div>
       <div class="flex justify-center md:justify-end space-x-4 mt-2 md:mt-0">
         <a href="/author-login/" class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700">AUTHOR LOGIN</a>
-        <a href="#" class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700">IJIRT PARTNER LOGIN</a>
+        <a href="#" class="bg-blue-600 tcwhite px-3 py-1 rounded text-xs hover:bg-blue-700">IJIRT PARTNER LOGIN</a>
       </div>
     </div>
    
@@ -98,21 +98,101 @@
             <a href="/archive/" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">ARCHIVE</a>
           </div>
         </div>
-        <div class="md:hidden flex flex-col gap-2 mt-2" id="mobile-actions" style="display:none;">
-          <a href="/submit/" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">SUBMIT PAPER</a>
-          <a href="/archive/" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">ARCHIVE</a>
-        </div>
+        <!-- Off-canvas mobile menu -->
+        <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden transition-opacity duration-200"></div>
+        <aside id="mobile-drawer" class="fixed top-0 left-0 h-full w-80 max-w-full bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 flex flex-col" style="will-change: transform;">
+          <div class="flex justify-end p-4">
+            <button id="mobile-close-btn" class="text-3xl text-gray-400 hover:text-gray-700 focus:outline-none" aria-label="Close Menu">&times;</button>
+          </div>
+          <nav class="flex-1 flex flex-col gap-1 px-6 pb-6">
+            <a href="/" class="py-3 border-b text-gray-700 font-semibold">HOME</a>
+            <div class="border-b">
+              <button class="w-full flex justify-between items-center py-3 text-gray-700 font-semibold focus:outline-none" onclick="this.nextElementSibling.classList.toggle('hidden')">EDITORIAL <span>&#9662;</span></button>
+              <div class="hidden flex flex-col pl-4 pb-2">
+                <a href="#" class="py-1 text-gray-600">Reviewers</a>
+                <a href="#" class="py-1 text-gray-600">Join as Reviewer/Referral</a>
+                <a href="#" class="py-1 text-gray-600">Peer Review Editorial Policy</a>
+              </div>
+            </div>
+            <div class="border-b">
+              <button class="w-full flex justify-between items-center py-3 text-gray-700 font-semibold focus:outline-none" onclick="this.nextElementSibling.classList.toggle('hidden')">AUTHORS <span>&#9662;</span></button>
+              <div class="hidden flex flex-col pl-4 pb-2">
+                <a href="#" class="py-1 text-gray-600">Paper Format</a>
+                <a href="#" class="py-1 text-gray-600">How to Publish paper?</a>
+                <a href="#" class="py-1 text-gray-600">Author's Guidelines</a>
+                <a href="#" class="py-1 text-gray-600">Copyright Form</a>
+                <a href="/submit/" class="py-1 text-gray-600">Submit Paper</a>
+                <a href="#" class="py-1 text-gray-600">Processing Charges</a>
+                <a href="#" class="py-1 text-gray-600">Track Paper</a>
+                <a href="#" class="py-1 text-gray-600">Impact Factor Details</a>
+                <a href="#" class="py-1 text-gray-600">Publication Policy</a>
+                <a href="#" class="py-1 text-gray-600">Ethics Policy</a>
+                <a href="#" class="py-1 text-gray-600">Refund Policy</a>
+                <a href="#" class="py-1 text-gray-600">UGC Care List Journal</a>
+                <a href="#" class="py-1 text-gray-600">Peer Review Policy</a>
+                <a href="#" class="py-1 text-gray-600">Scientific Journal</a>
+                <a href="#" class="py-1 text-gray-600">Journal For Engineering Research</a>
+              </div>
+            </div>
+            <div class="border-b">
+              <button class="w-full flex justify-between items-center py-3 text-gray-700 font-semibold focus:outline-none" onclick="this.nextElementSibling.classList.toggle('hidden')">CONFERENCE <span>&#9662;</span></button>
+              <div class="hidden flex flex-col pl-4 pb-2">
+                <a href="#" class="py-1 text-gray-600">New Proposal / Terms</a>
+                <a href="#" class="py-1 text-gray-600">Special Issues</a>
+                <a href="#" class="py-1 text-gray-600">Upcoming Conferences</a>
+              </div>
+            </div>
+            <a href="/submit/" class="py-3 border-b text-gray-700 font-semibold">SUBMIT PAPER</a>
+            <a href="#" class="py-3 border-b text-gray-700 font-semibold">CURRENT ISSUE</a>
+            <div class="border-b">
+              <button class="w-full flex justify-between items-center py-3 text-gray-700 font-semibold focus:outline-none" onclick="this.nextElementSibling.classList.toggle('hidden')">ARCHIVE <span>&#9662;</span></button>
+              <div class="hidden flex flex-col pl-4 pb-2">
+                <a href="#" class="py-1 text-gray-600">Archive 1</a>
+                <a href="#" class="py-1 text-gray-600">Archive 2</a>
+              </div>
+            </div>
+            <a href="#" class="py-3 border-b text-gray-700 font-semibold">REVIEWS</a>
+            <a href="/submit/" class="mt-6 bg-blue-500 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 shadow hover:bg-blue-600 transition">SUBMIT PAPER <span class="ml-2">&rarr;</span></a>
+          </nav>
+        </aside>
       </div>
     </nav>
     <script>
       const btn = document.getElementById('mobile-menu-btn');
-      const nav = document.getElementById('main-nav');
-      const actions = document.getElementById('mobile-actions');
-      btn.addEventListener('click', () => {
-        nav.classList.toggle('hidden');
-        actions.style.display = actions.style.display === 'none' ? 'flex' : 'none';
-      });
+      const drawer = document.getElementById('mobile-drawer');
+      const overlay = document.getElementById('mobile-overlay');
+      const closeBtn = document.getElementById('mobile-close-btn');
+      function openDrawer() {
+        drawer.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+        setTimeout(() => overlay.classList.add('opacity-100'), 10);
+      }
+      function closeDrawer() {
+        drawer.classList.add('-translate-x-full');
+        overlay.classList.remove('opacity-100');
+        setTimeout(() => overlay.classList.add('hidden'), 200);
+      }
+      btn.addEventListener('click', openDrawer);
+      closeBtn.addEventListener('click', closeDrawer);
+      overlay.addEventListener('click', closeDrawer);
     </script>
+    <style>
+      @media (max-width: 768px) {
+        #main-nav {
+          display: none !important;
+        }
+      }
+      #mobile-overlay {
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      #mobile-overlay.opacity-100 {
+        opacity: 1;
+      }
+      #mobile-drawer {
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      }
+    </style>
     {% block content %}{% endblock %}
     <!-- Footer Marquee -->
     
@@ -186,5 +266,30 @@
         <a href="#" class="hover:underline">Refund policy</a>
       </div>
     </footer>
+    <style>
+      /* Custom mobile menu styles */
+      @media (max-width: 768px) {
+        #main-nav {
+          background: #fff;
+          border-radius: 1rem;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+          margin-top: 0.5rem;
+          padding: 1rem 0.5rem 1rem 0.5rem;
+        }
+        #main-nav li a {
+          display: block;
+          padding: 0.75rem 1.25rem;
+          border-radius: 0.5rem;
+          margin-bottom: 0.25rem;
+          font-size: 1.1rem;
+          font-weight: 500;
+          transition: background 0.15s, color 0.15s;
+        }
+        #main-nav li a:hover, #main-nav li a:active {
+          background: #e0e7ff;
+          color: #2563eb;
+        }
+      }
+    </style>
   </body>
 </html> 

@@ -7,16 +7,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 import requests
 from django.http import HttpResponse
+from .forms import PaperForm
 
 # Create your views here.
-
-class PaperForm(forms.ModelForm):
-    class Meta:
-        model = Paper
-        fields = [
-            'title', 'paper_file', 'area_of_research', 'author_name', 'institution', 'email', 'mobile',
-            'address_line1', 'address_line2', 'country', 'state', 'city', 'pincode', 'prev_paper'
-        ]
 
 def send_sms(phone_number, message):
     # Fast2SMS API configuration
@@ -48,10 +41,45 @@ def submit_paper(request):
     if request.method == 'POST':
         form = PaperForm(request.POST, request.FILES)
         if form.is_valid():
-            paper = form.save()
+            paper = form.save(commit=False)
             
-            # Send success message to user
-            messages.success(request, f'Your paper has been submitted successfully! Your Paper ID is: {paper.id}. Please save this ID for future reference.')
+            # Handle future reference
+            if form.cleaned_data.get('save_for_future'):
+                paper.saved_for_future = True
+                paper.reference_note = form.cleaned_data.get('reference_note', '')
+            
+            paper.save()
+            
+            # Send confirmation email
+            subject = 'Paper Submission Confirmation - IJIRT'
+            message = f'''
+            Dear {paper.author_name},
+
+            Thank you for submitting your paper to IJIRT. Your submission has been received successfully.
+
+            Paper Details:
+            Title: {paper.title}
+            Area of Research: {paper.get_area_of_research_display()}
+            Submission Date: {paper.submitted_at.strftime('%Y-%m-%d %H:%M:%S')}
+            Paper ID: {paper.id}
+
+            We will review your paper and get back to you soon.
+
+            Best regards,
+            IJIRT Team
+            '''
+            
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [paper.email],
+                    fail_silently=False,
+                )
+                messages.success(request, f'Your paper has been submitted successfully! Your Paper ID is: {paper.id}. Please save this ID for future reference.')
+            except Exception as e:
+                messages.warning(request, 'Paper submitted successfully, but there was an error sending the confirmation email.')
             
             # Send email notification to admin
             admin_email = 'gautams1512@gmail.com'

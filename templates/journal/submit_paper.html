@@ -91,6 +91,20 @@
           {{ form.prev_paper|add_class:'w-full border border-gray-300 rounded px-3 sm:px-4 py-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500' }}
           {% for error in form.prev_paper.errors %}<span class="text-xs text-red-600">{{ error }}</span>{% endfor %}
         </div>
+
+        <!-- Future Reference Section -->
+        <div class="flex flex-col space-y-1 sm:col-span-2 bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-center space-x-2 mb-2">
+            <input type="checkbox" id="save_for_future" name="save_for_future" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+            <label for="save_for_future" class="text-sm sm:text-base font-medium text-gray-700">Save this information for future reference</label>
+          </div>
+          <div id="reference_note_container" class="hidden">
+            <label for="reference_note" class="text-sm sm:text-base font-medium text-gray-700">Add a note for future reference (optional)</label>
+            <textarea id="reference_note" name="reference_note" rows="2" 
+                      class="w-full border border-gray-300 rounded px-3 sm:px-4 py-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Add any notes or reminders about this submission"></textarea>
+          </div>
+        </div>
       </div>
       <div class="flex justify-center mt-6 sm:mt-8">
         <button type="submit" class="w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded text-sm sm:text-base font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">Submit</button>
@@ -99,4 +113,12 @@
     <p class="text-red-600 text-xs mt-4 text-center">Kindly submit your paper exclusively using the provided form. Papers sent via email will not be processed.</p>
   </div>
 </section>
+
+<script>
+  // Show/hide reference note field based on checkbox
+  document.getElementById('save_for_future').addEventListener('change', function() {
+    const noteContainer = document.getElementById('reference_note_container');
+    noteContainer.classList.toggle('hidden', !this.checked);
+  });
+</script>
 {% endblock %} 

@@ -1,22 +1,22 @@
 from django.db import models
+from django.utils import timezone
 
 class Paper(models.Model):
     AREA_CHOICES = [
         ('engineering', 'Engineering'),
-        ('sci_tech', 'Science & Technology'),
-        ('pharmacy', 'Pharmacy'),
-        ('science', 'Science (Physics/Chemistry/Maths/Biology)'),
-        ('commerce', 'Commerce'),
-        ('economics', 'Economics'),
+        ('science', 'Science'),
+        ('technology', 'Technology'),
+        ('medical', 'Medical'),
         ('management', 'Management'),
-        ('hospitality', 'Hospitality and Tourism'),
-        ('arts', 'Arts'),
-        ('medical', 'Medical Science'),
-        ('life_science', 'Life Sciences'),
-        ('health_medical', 'Health & Medical Science'),
-        ('social_science', 'Social Science and Humanities'),
-        ('law', 'LAW & Education'),
-        ('biotech', 'Biotechnology'),
+        ('other', 'Other'),
+    ]
+
+    STATUS_CHOICES = [
+        ('submitted', 'Submitted'),
+        ('under_review', 'Under Review'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+        ('published', 'Published'),
     ]
 
     title = models.CharField(max_length=200)
@@ -25,26 +25,29 @@ class Paper(models.Model):
     author_name = models.CharField(max_length=100)
     institution = models.CharField(max_length=200)
     email = models.EmailField()
-    mobile = models.CharField(max_length=20)
-    address_line1 = models.CharField(max_length=200, default="N/A")
+    mobile = models.CharField(max_length=15)
+    address_line1 = models.CharField(max_length=200)
     address_line2 = models.CharField(max_length=200, blank=True)
-    country = models.CharField(max_length=100, default="N/A")
-    state = models.CharField(max_length=100, default="N/A")
-    city = models.CharField(max_length=100, default="N/A")
-    pincode = models.CharField(max_length=20, default="000000")
+    country = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    pincode = models.CharField(max_length=10)
     prev_paper = models.CharField(max_length=200, blank=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
-    STATUS_CHOICES = [
-        ('submitted', 'Submitted'),
-        ('under_review', 'Under Review'),
-        ('accepted', 'Accepted'),
-        ('rejected', 'Rejected'),
-        ('published', 'Published'),
-    ]
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='submitted')
+    
+    # Future reference fields
+    saved_for_future = models.BooleanField(default=False)
+    reference_note = models.TextField(blank=True)
+    saved_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.author_name}"
+
+    def save(self, *args, **kwargs):
+        if self.saved_for_future and not self.saved_date:
+            self.saved_date = timezone.now()
+        super().save(*args, **kwargs)
 
 class CoAuthor(models.Model):
     paper = models.ForeignKey(Paper, related_name='coauthors', on_delete=models.CASCADE)
